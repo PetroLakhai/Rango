@@ -19,5 +19,5 @@ def about(request):
 
 
 def training(request):
-    example_dict = {'variable_name': 'Below presented to Rango and his Hot Baby. Let`s scroll together!'}
+    example_dict = {'second_picture_presentation': 'Below presented to Rango and his Hot Baby. Let`s scroll together!'}
     return render(request, 'rango/training.html', context=example_dict)
