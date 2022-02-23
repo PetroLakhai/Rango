@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+
+<html>
+
+    <head>
+        <title>Rango</title>
+    </head>
+
+    <body>
+        <h1>Rango says...</h1>
+
+        <div> here is the about page. </div>
+
+        <div>
+            hey there partner! <br />
+            <strong>{{ message }}</strong><br />
+        </div>
+
+        <div>
+            <a href="/rango/">Index</a><br />
+            <img src="{% static 'images/rango.jpeg' %}"
+                 alt="Picture of Rango" />
+            <img src="{{ MEDIA_URL }}sexy_woman.jpeg" alt="Picture of a Hot Baby."
+                 alt="Picture of a Hot Baby" />
+        </div>
+
+        <div> This tutorial has been put together by Petro </div>
+    </body>
+
+</html>
