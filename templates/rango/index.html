@@ -1,24 +1,21 @@
 <!DOCTYPE html>
-{% load staticfiles %}
 
 <html>
 
-    <head>
-        <title>Rango</title>
-    </head>
-
     <body>
-        <h1>Rango says...</h1>
-        <div>
-            hey there partner! <br />
-            <strong>{{ boldmessage }}</strong><br />
-        </div>
 
-        <div>
-            <a href="/rango/about/">About</a><br />
-            <img src="{% static 'images/rango.jpeg' %}"
-                 alt="Picture of Rango" />
-        </div>
+        <h1>Categories</h1>
+
+        <ul>
+            {% for category in categories %}
+            <li>
+                <!-- The following line is changed to add an HTML hyperlink -->
+                <a href="/rango/category/{{ category.slug }}/">{{ category.name }}</a>
+            </li>
+            {% endfor %}
+        </ul>
+
     </body>
 
 </html>
+
