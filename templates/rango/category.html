@@ -10,10 +10,10 @@
         <div>
         {% if category %}
             <h1>{{ category.name }}</h1>
-            {% if page %}
+            {% if pages %}
             <ul>
-                {% for pag in page %}
-                <li><a href="{{ pag.url }}">{{ pag.title }}</a></li>
+                {% for page in pages %}
+                <li><a href="{{ page.url }}">{{ page.title }}</a></li>
                 {% endfor %}
             </ul>
             {% else %}
