@@ -4,7 +4,7 @@ os.environ.setdefault('DJANGO_SETTINGS_MODULE',
 
 import django
 django.setup()
-from rango.models import Category, Title
+from rango.models import Category, Page
 
 
 def populate():
@@ -49,12 +49,12 @@ def populate():
 
     # Print out the categories we have added.
     for c in Category.objects.all():
-            for p in Title.objects.filter(category=c):
+            for p in Page.objects.filter(category=c):
                 print(f'- {c}: {p}')
 
 
 def add_page(cat, title, url, views=0):
-    p = Title.objects.get_or_create(category=cat, title=title)[0]
+    p = Page.objects.get_or_create(category=cat, title=title)[0]
     p.url = url
     p.views = views
     p.save()
