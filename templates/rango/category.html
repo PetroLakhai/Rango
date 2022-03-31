@@ -10,10 +10,10 @@
         <div>
         {% if category %}
             <h1>{{ category.name }}</h1>
-            {% if pages %}
+            {% if page %}
             <ul>
-                {% for page in pages %}
-                <li><a href="{{ page.url }}">{{ page.title }}</a></li>
+                {% for pag in page %}
+                <li><a href="{{ pag.url }}">{{ pag.title }}</a></li>
                 {% endfor %}
             </ul>
             {% else %}
@@ -24,7 +24,7 @@
         {% endif %}
         </div>
         <br />
-    <a href="/rango/">Back</a><br />
+    <a href="/rango/">Back to main page</a><br />
     </body>
 
 <html>

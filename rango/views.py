@@ -32,7 +32,7 @@ def training(request):
     return render(request, 'rango/training.html', context=example_dict)
 
 
-def show_category (request, category_name_slug):
+def show_category(request, category_name_slug):
     # Create a context dictionary which we can pass
     # to the template rendering engine.
     context_dict = {}
@@ -45,10 +45,10 @@ def show_category (request, category_name_slug):
 
         # Retrieve all of the associated pages.
         # The filter() will return a list of page objects or an empty list.
-        pages = Page.objects.filter(category=category)
+        page = Page.objects.filter(category=category)
 
         # Adds our results list to the template context under name pages.
-        context_dict['pages'] = pages
+        context_dict['page'] = page
         # We also add the category object from
         # the database to the context dictionary.
         # We'll use this in the template to verify that the category exists.
@@ -59,8 +59,7 @@ def show_category (request, category_name_slug):
         # Don't do anything -
         # the template will display the "no category" message for us.
         context_dict['category'] = None
-        context_dict['pages'] = None
+        context_dict['page'] = None
 
     # Go render the response and return it to the client.
     return render(request, 'rango/category.html', context=context_dict)
-
