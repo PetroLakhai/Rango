@@ -1,76 +1,72 @@
-<!DOCTYPE html>
-{% load staticfiles %}
+{% extends 'rango/base.html' %}
+{%load staticfiles%}
 
-<html>
+{% block title_block %}
+    Training
+{% endblock %}
 
-    <head>
-        <title>Rango</title>
-    </head>
+{% block body_block %}
+    <div>
+        <a href="/rango/about/">About</a><br />
+    </div>
 
-    <body>
+    <h1>Petro`s imagine page...</h1>
 
-        <div>
-            <a href="/rango/about/">About</a><br />
-        </div>
+    <div>
+        Hello here my Moska! <br />
+        <strong>{{ second_picture_presentation }}</strong><br />
+    </div>
 
-        <h1>Petro`s imagine page...</h1>
+    <div>
+        </p> <br />
+        </p> <br />
+        </p> <br />
+        </p> <br />
+        </p> <br />
+        </p> <br />
+        </p> <br />
+        </p> <br />
+        </p> <br />
+        </p> <br />
+        </p> <br />
+        </p> <br />
+        </p> <br />
+        </p> <br />
+        </p> <br />
+        </p> <br />
+        </p> <br />
+        </p> <br />
+        </p> <br />
+        </p> There is Rango! <br />
+        <img src="{% static 'images/rango2.jpeg' %}"
+             alt="Picture of Rango" />
+    </div>
 
-        <div>
-            Hello here my Moska! <br />
-            <strong>{{ second_picture_presentation }}</strong><br />
-        </div>
+    <div>
+        </p> <br />
+        </p> <br />
+        </p> <br />
+        </p> <br />
+        </p> <br />
+        </p> <br />
+        </p> <br />
+        </p> <br />
+        </p> <br />
+        </p> <br />
+        </p> <br />
+        </p> <br />
+        </p> <br />
+        </p> <br />
+        </p> <br />
+        </p> <br />
+        </p> <br />
+        </p> <br />
+        </p> <br />
+        </p> <br />
+        </p> There is the Rango`s hot baby. Let`s called her Babita! <br />
 
-        <div>
-            </p> <br />
-            </p> <br />
-            </p> <br />
-            </p> <br />
-            </p> <br />
-            </p> <br />
-            </p> <br />
-            </p> <br />
-            </p> <br />
-            </p> <br />
-            </p> <br />
-            </p> <br />
-            </p> <br />
-            </p> <br />
-            </p> <br />
-            </p> <br />
-            </p> <br />
-            </p> <br />
-            </p> <br />
-            </p> There is Rango! <br />
-            <img src="{% static 'images/rango2.jpeg' %}"
-                 alt="Picture of Rango" />
-        </div>
+        <img src="{{ MEDIA_URL }}sexy_woman.jpeg" alt="Picture of a Hot Baby."/>
+    </div>
+{% endblock %}
 
-        <div>
-            </p> <br />
-            </p> <br />
-            </p> <br />
-            </p> <br />
-            </p> <br />
-            </p> <br />
-            </p> <br />
-            </p> <br />
-            </p> <br />
-            </p> <br />
-            </p> <br />
-            </p> <br />
-            </p> <br />
-            </p> <br />
-            </p> <br />
-            </p> <br />
-            </p> <br />
-            </p> <br />
-            </p> <br />
-            </p> <br />
-            </p> There is the Rango`s hot baby. Let`s called her Babita! <br />
 
-            <img src="{{ MEDIA_URL }}sexy_woman.jpeg" alt="Picture of a Hot Baby."/>
-        </div>
-
-    </body>
-
-</html>
