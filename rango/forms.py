@@ -1,5 +1,5 @@
 from django import forms
-from rango.models import Page,Category
+from rango.models import Page, Category
 
 
 class CategoryForm(forms.ModelForm):
