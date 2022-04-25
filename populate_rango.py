@@ -1,8 +1,9 @@
 import os
-os.environ.setdefault('DJANGO_SETTINGS_MODULE',
-                      'tango_with_django_project.settings')
+
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "tango_with_django_project.settings")
 
 import django
+
 django.setup()
 from rango.models import Category, Page
 
@@ -15,30 +16,47 @@ def populate():
     # through each data structure, and add the data to our models.
 
     python_pages = [
-        {'title': 'Official Python Tutorial',
-         'url': 'http://docs.python.org/3/tutorial/', 'views': 1},
-        {'title': 'How to Think like a Computer Scientist',
-         'url': 'http://www.greenteapress.com/thinkpython/', 'views': 2},
-        {'title': 'Learn Python in 10 Minutes', 'url':
-         'http://www.korokithakis.net/tutorials/python/', 'views': 3}]
+        {
+            "title": "Official Python Tutorial",
+            "url": "http://docs.python.org/3/tutorial/",
+            "views": 1,
+        },
+        {
+            "title": "How to Think like a Computer Scientist",
+            "url": "http://www.greenteapress.com/thinkpython/",
+            "views": 2,
+        },
+        {
+            "title": "Learn Python in 10 Minutes",
+            "url": "http://www.korokithakis.net/tutorials/python/",
+            "views": 3,
+        },
+    ]
 
     django_pages = [
-        {'title': 'Official Django Tutorial',
-         'url': 'https://docs.djangoproject.com/en/2.1/intro/tutorial01/', 'views': 4},
-        {'title': 'Django Rocks', 'url':
-         'http://www.djangorocks.com/', 'views': 5},
-        {'title': 'How to Tango with Django',
-         'url': 'http://www.tangowithdjango.com/', 'views': 6}]
+        {
+            "title": "Official Django Tutorial",
+            "url": "https://docs.djangoproject.com/en/2.1/intro/tutorial01/",
+            "views": 4,
+        },
+        {"title": "Django Rocks", "url": "http://www.djangorocks.com/", "views": 5},
+        {
+            "title": "How to Tango with Django",
+            "url": "http://www.tangowithdjango.com/",
+            "views": 6,
+        },
+    ]
 
     other_pages = [
-        {'title': 'Bottle', 'url':
-         'http://bottlepy.org/docs/dev/', 'views': 7},
-        {'title': 'Flask',
-         'url': 'http://flask.pocoo.org', 'views': 8}]
+        {"title": "Bottle", "url": "http://bottlepy.org/docs/dev/", "views": 7},
+        {"title": "Flask", "url": "http://flask.pocoo.org", "views": 8},
+    ]
 
-    cats = {'Python': {'pages': python_pages, 'views': 128, 'likes': 64},
-            'Django': {'pages': django_pages, 'views': 128, 'likes': 32},
-            'Other Frameworks': {'pages': other_pages, 'views': 128, 'likes': 16}}
+    cats = {
+        "Python": {"pages": python_pages, "views": 128, "likes": 64},
+        "Django": {"pages": django_pages, "views": 128, "likes": 32},
+        "Other Frameworks": {"pages": other_pages, "views": 128, "likes": 16},
+    }
 
     # If you want to add more categories or pages,
     # add them to the dictionaries above.
@@ -46,14 +64,14 @@ def populate():
     # The code below goes through the cats dictionary, then adds each category,
     # and then adds all the associated pages for that category.
     for cat, cat_data in cats.items():
-        c = add_cat(cat, views=cat_data['views'], likes=cat_data['likes'])
-        for p in cat_data['pages']:
-            add_page(c, p['title'], p['url'], p['views'])
+        c = add_cat(cat, views=cat_data["views"], likes=cat_data["likes"])
+        for p in cat_data["pages"]:
+            add_page(c, p["title"], p["url"], p["views"])
 
     # Print out the categories we have added.
     for c in Category.objects.all():
-            for p in Page.objects.filter(category=c):
-                print(f'- {c}: {p}')
+        for p in Page.objects.filter(category=c):
+            print(f"- {c}: {p}")
 
 
 def add_page(cat, title, url, views):
@@ -72,7 +90,7 @@ def add_cat(name, views, likes):
     return c
 
 
-#Start execution here!
-if __name__ == '__main__':
-    print('Starting Rango population script...')
+# Start execution here!
+if __name__ == "__main__":
+    print("Starting Rango population script...")
     populate()
