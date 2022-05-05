@@ -16,7 +16,8 @@ Including another URLconf
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
-from django.urls import include, path
+from django.contrib.auth import views as auth_views
+from django.urls import include, path, reverse_lazy
 
 from rango import views
 
@@ -27,4 +28,5 @@ urlpatterns = [
     # The above maps any URLs starting with rango/ to be handled by rango.
     path("admin/", admin.site.urls),
     path("accounts/", include("registration.backends.simple.urls")),
+    path('accounts/password/change/', auth_views.PasswordChangeView.as_view(success_url=reverse_lazy('auth_password_change_done')), name='auth_password_change'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
