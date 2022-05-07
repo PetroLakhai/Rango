@@ -14,7 +14,7 @@ class Category(models.Model):
         super(Category, self).save(*args, **kwargs)
 
     class Meta:
-        verbose_name_plural = 'categories'
+        verbose_name_plural = "categories"
 
     def __str__(self):
         return self.name
@@ -41,7 +41,7 @@ class UserProfile(models.Model):
 
     # The additional attributes we wish to include.
     website = models.URLField(blank=True)
-    picture = models.ImageField(upload_to='profile_images', blank=True)
+    picture = models.ImageField(upload_to="profile_images", blank=True)
 
     def __str__(self):
         return self.user.username
