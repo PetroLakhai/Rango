@@ -15,7 +15,7 @@ def index(request):
     page_list: QuerySet = Page.objects.order_by("-views")[:5]
 
     context_dict = {}
-    context_dict["boldmessage"] = ["Crunchy, creamy, cookie, candy, cupcake!"]
+    context_dict["boldmessage"] = ["Green text, green text, green text!"]
     context_dict["categories"] = category_list
     context_dict["pages"] = page_list
 

@@ -1,0 +1,16 @@
+div {
+    font-size: 14pt;
+    front-style: italic;
+    color: #000000;
+}
+
+h1 {
+    color: 090909
+}
+
+.low_boxes {
+    display: inline;
+    background-color: #333333;
+    color: #FFFFFF;
+    padding: 18px;
+}
