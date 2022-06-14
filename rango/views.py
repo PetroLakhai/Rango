@@ -1,12 +1,13 @@
 from datetime import datetime
 
 from django.contrib.auth.decorators import login_required
+from django.db.models.query import QuerySet
 from django.shortcuts import redirect, render
 from django.urls import reverse
 
+from rango.bing_search import run_query
 from rango.forms import CategoryForm, PageForm
 from rango.models import Category, Page
-from django.db.models.query import QuerySet
 
 
 def index(request):
@@ -133,7 +134,9 @@ def visitor_cookie_handler(request):
     last_visit_cookie: str = get_server_side_cookie(
         request, "last_visit", str(datetime.now())
     )
-    last_visit_time: datetime = datetime.strptime(last_visit_cookie[:-7], "%Y-%m-%d %H:%M:%S")
+    last_visit_time: datetime = datetime.strptime(
+        last_visit_cookie[:-7], "%Y-%m-%d %H:%M:%S"
+    )
 
     if (datetime.now() - last_visit_time).days > 0:
         visits = visits + 1
@@ -141,3 +144,15 @@ def visitor_cookie_handler(request):
     else:
         request.session["last_visit"] = last_visit_cookie
     request.session["visits"] = visits
+
+
+def search(request):
+    result_list = []
+
+    if request.method == "POST":
+        query = request.POST["query"].strip()
+        if query:
+            # Run our Bing function to get the results list!
+            result_list = run_query(query)
+
+    return render(request, "rango/search.html", {"result_list": result_list})
