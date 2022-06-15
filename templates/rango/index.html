@@ -6,45 +6,69 @@
 {% endblock %}
 
 {% block body_block %}
-    <h1>Rango says...</h1>
-    <div>
-        {% if user.is_authenticated %}
-            Hi, {{ user.username }}!
-        {% else %}
-            hey there partner!
-        {% endif %}
-        <br />
-        <strong>{{ boldmessage }}</strong><br />
+    <link rel="stylesheet" type="text/css" href="/static/css/stylesheet.css" />
+    <div class="jumbotron p-4">
+        <div class="container">
+            <h1 class="jumbotron-heading">Rango says...</h1>
+            <div>
+                <div>
+                {% if user.is_authenticated %}
+                    howdy {{ user.username }}!
+                {% else %}
+                    hey there partner!
+                {% endif %}
+                </div>
+            <strong class="green">{{ boldmessage }}</strong>
+            </div>
+        </div>
     </div>
 
-    <h1>Django</h1>
-    <ul>
-        {% for category in categories %}
-        <li>
-            <a href="{% url 'rango:show_category' category.slug %}">
-                {{ category.name }}
-            </a>
-        </li>
-        {% endfor %}
-    </ul>
 
-    <h1>Most Viewed Pages</h1>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card mb-6">
+                    <div class="card-body">
+                        <h1>Most Liked Categories</h1>
+                        <p class="card-text">
+                        {% if categories %}
+                        <ul class="list-group">
+                        {% for category in categories %}
+                            <li class="list-group-item">
+                            <a href="{% url 'rango:show_category' category.slug %}">{{ category.name }}</a>
+                            </li>
+                        {% endfor %}
+                        </ul>
+                        {% else %}
+                        <strong>There are no categories present.</strong>
+                        {% endif %}
+                        </p>
+                    </div>
+                </div>
+            </div>
 
-      <div>
-      {% if pages %}
-      <ul>
-          {% for page in pages %}
-          <li>
-              <a href="{{ page.url }}">{{ page.title }}</a>
-          </li>
-          {% endfor %}
-      </ul>
-      {% else %}
-          <strong>There are no pages present.</strong>
-      {% endif %}
-      </ul>
-      </div>
-
+            <div class="col-md-6">
+                <div class="card mb-6">
+                    <div class="card-body">
+                        <h1>Most Viewed Pages</h1>
+                        {% if pages %}
+                        <ul class="list-group">
+                        {% for page in pages %}
+                            <li class="list-group-item">
+                            <a href="{{ page.url }}">{{ page.title }}</a>
+                            </li>
+                        {% endfor %}
+                        </ul>
+                        {% else %}
+                        <strong>There are no pages present.</strong>
+                        {% endif %}
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br>
     <div>
         <img src="{% static 'images/rango.jpeg' %}"
              alt="Picture of Rango" />
