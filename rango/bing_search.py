@@ -31,6 +31,12 @@ def read_bing_key():
     return bing_api_key
 
 
+# def input (search_terms):
+#     run_query(search_terms)
+#     return search_terms
+#
+
+
 def run_query(search_terms):
 
     """

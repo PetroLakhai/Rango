@@ -148,6 +148,7 @@ def visitor_cookie_handler(request):
 
 def search(request):
     result_list = []
+    query = ""
 
     if request.method == "POST":
         query = request.POST["query"].strip()
@@ -155,4 +156,8 @@ def search(request):
             # Run our Bing function to get the results list!
             result_list = run_query(query)
 
-    return render(request, "rango/search.html", {"result_list": result_list})
+    return render(
+        request,
+        "rango/search.html",
+        context={"result_list": result_list, "query": query},
+    )
