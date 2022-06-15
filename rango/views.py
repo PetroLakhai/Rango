@@ -23,7 +23,6 @@ def index(request):
     visitor_cookie_handler(request)
     context_dict["visits"] = request.session["visits"]
 
-    # import ipdb; ipdb.set_trace()
     response = render(request, "rango/index.html", context=context_dict)
     return response
 
@@ -120,7 +119,7 @@ def restricted(request):
     return render(request, "rango/restricted.html")
 
 
-def get_server_side_cookie(request, cookie: str, default_val=None) -> int:
+def _get_server_side_cookie(request, cookie: str, default_val=None) -> int:
     """The method collect cookie data. It is helper method for method visitor_cookie_handler."""
     val: int = request.session.get(cookie)
     if not val:
@@ -130,8 +129,8 @@ def get_server_side_cookie(request, cookie: str, default_val=None) -> int:
 
 def visitor_cookie_handler(request):
     """The method collect data about user`s quantity of website visits and last time when user visit website."""
-    visits = int(get_server_side_cookie(request, "visits", "1"))
-    last_visit_cookie: str = get_server_side_cookie(
+    visits = int(_get_server_side_cookie(request, "visits", "1"))
+    last_visit_cookie: str = _get_server_side_cookie(
         request, "last_visit", str(datetime.now())
     )
     last_visit_time: datetime = datetime.strptime(
