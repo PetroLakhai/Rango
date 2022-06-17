@@ -155,3 +155,18 @@ def search(request):
             result_list = run_query(query)
 
     return render(request, "rango/search.html", {"result_list": result_list})
+
+
+def goto_url(request):
+    page_id = None
+    if request.method == "GET":
+        page_id = request.GET.get("page_id")
+        page = Page.objects.filter(id=page_id).first()
+        page_url = page.url
+        return redirect(page_url)
+
+    return redirect(reverse("index"))
+
+
+
+
