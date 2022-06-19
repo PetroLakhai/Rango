@@ -50,7 +50,7 @@ def show_category(request, category_name_slug):
 
     try:
         category: Category = Category.objects.get(slug=category_name_slug)
-        pages: Page = Page.objects.filter(category=category)
+        pages: Page = Page.objects.filter(category=category).order_by("-views")
 
         context_dict["pages"] = pages
         context_dict["category"] = category
@@ -154,7 +154,7 @@ def search(request):
             # Run our Bing function to get the results list!
             result_list = run_query(query)
 
-    return render(request, "rango/search.html", {"result_list": result_list})
+    return render(request, "rango/category.html", {"result_list": result_list})
 
 
 def goto_url(request):
@@ -162,11 +162,10 @@ def goto_url(request):
     if request.method == "GET":
         page_id = request.GET.get("page_id")
         page = Page.objects.filter(id=page_id).first()
+        page.views = page.views + 1
+        page.save()
         page_url = page.url
+
         return redirect(page_url)
 
     return redirect(reverse("index"))
-
-
-
-
