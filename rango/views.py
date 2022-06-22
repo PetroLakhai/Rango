@@ -58,7 +58,7 @@ def show_category(request, category_name_slug):
     except Category.DoesNotExist:
         context_dict["category"] = None
         context_dict["pages"] = None
-
+    # import ipdb; ipdb.set_trace()
     return render(request, "rango/category.html", context=context_dict)
 
 
@@ -154,7 +154,13 @@ def search(request):
             # Run our Bing function to get the results list!
             result_list = run_query(query)
 
-    return render(request, "rango/category.html", {"result_list": result_list})
+    pages = Page.objects.all()
+    search_results = []
+    for page in pages:
+        if query.lower() in page.title.lower():
+            search_results.append(page)
+    # import ipdb; ipdb.set_trace()
+    return render(request, "rango/category.html", {"result_list": result_list, "search_results": search_results})
 
 
 def goto_url(request):
