@@ -6,8 +6,8 @@ from django.shortcuts import redirect, render
 from django.urls import reverse
 
 from rango.bing_search import run_query
-from rango.forms import CategoryForm, PageForm
-from rango.models import Category, Page
+from rango.forms import CategoryForm, PageForm, UserProfileForm
+from rango.models import Category, Page, User, UserProfile
 
 
 def index(request):
@@ -175,3 +175,21 @@ def goto_url(request):
         return redirect(page_url)
 
     return redirect(reverse("index"))
+
+
+def profile_registration(request):
+    profile_information = UserProfileForm()
+
+    if request.method == "POST":
+        profile_information = UserProfileForm(request.POST, request.FILES)
+        if profile_information.is_valid():
+            profile_information.save(commit=False)
+            # import ipdb; ipdb.set_trace()
+            user_profile = UserProfile.objects.get(user__id=request.user.id)
+            user_profile.website = profile_information.cleaned_data["website"]
+            user_profile.picture = profile_information.cleaned_data["picture"]
+            user_profile.save()
+            return redirect("/rango/")
+        else:
+            print(profile_information.errors)
+    return render(request, "rango/profile_registration.html", {"profile_information": profile_information})
