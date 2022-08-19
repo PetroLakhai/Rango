@@ -22,9 +22,9 @@ from django.urls import include, path, reverse_lazy
 from rango import views
 
 urlpatterns = [
-    path("", views.index, name="index"),
+    path("", views.IndexView.as_view(), name="index"),
     path("rango/", include("rango.urls")),
-    path("training/", views.training, name="training"),
+    path("training/", views.TrainingView.as_view(), name="training"),
     # The above maps any URLs starting with rango/ to be handled by rango.
     path("admin/", admin.site.urls),
     path("accounts/", include("registration.backends.simple.urls")),

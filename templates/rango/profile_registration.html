@@ -2,25 +2,19 @@
 {%load staticfiles%}
 
 {% block title_block %}
-    Profile Registration
+    Register - Step 2
 {% endblock %}
 
 {% block body_block %}
     <div class="jumbotron p-4">
         <div class="container">
-            <h1 class="jumbotron-heading">Profile Registration</h1><br>
-                <form id="userprofile_form" method="post" action="/rango/profile_registration/" enctype='multipart/form-data'>
-                    {% csrf_token %}
-                    {% for hidden in profile_information.hidden_fields %}
-                        {{ hidden }}
-                    {% endfor %}
-                    {% for field in profile_information.visible_fields %}
-                        {{ field.errors }}
-                        {{ field.help_text }}
-                        {{ field }}
-                    {% endfor %}
-                    <input type="submit" name="submit" value="Register Profile" />
-                </form>
+            <h1 class="jumbotron-heading">Register - Step 2</h1><br>
+            <form method="post"
+                  action="{% url 'rango:profile_registration' %}" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <input type="submit" value="Create Profile" />
+            </form>
         </div>
     </div>
     <link rel="stylesheet" type="text/css" href="/static/css/stylesheet.css" />
