@@ -43,6 +43,10 @@
                 <li class="nav-item"><a class="nav-link"
                                         href="{% url 'rango:add_category' %}">Add Category</a></li>
                 <li class="nav-item"><a class="nav-link"
+                                        href="{% url 'rango:profile' user.username %}">Profile overview</a></li>
+                <li class="nav-item"><a class="nav-link"
+                                        href="{% url 'rango:list_profiles' %}">List Profiles </a></li>
+                <li class="nav-item"><a class="nav-link"
                                         href="{% url 'rango:profile_registration' %}">Profile Registration</a></li>
                 <li class="nav-item"><a class="nav-link"
                                         href="{% url 'auth_password_change' %}">Change Password</a></li>
