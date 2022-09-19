@@ -7,6 +7,7 @@ from django.shortcuts import redirect, render
 from django.urls import reverse
 from django.utils.decorators import method_decorator
 from django.views import View
+from django.http import HttpResponse
 
 from rango.bing_search import run_query
 from rango.forms import CategoryForm, PageForm, UserProfileForm
@@ -440,3 +441,54 @@ class ListProfilesView(View):
         return render(
             request, "rango/list_profiles.html", {"user_profile_list": profiles}
         )
+
+
+class LikeCategoryView(View):
+    @method_decorator(login_required)
+    def get(self, request):
+        category_id = request.GET['category_id']
+
+        try:
+            category = Category.objects.get(id=int(category_id))
+        except Category.DoesNotExist:
+            return HttpResponse(-1)
+        except ValueError:
+            return HttpResponse(-1)
+
+        category.likes = category.likes + 1
+        category.save()
+        return HttpResponse(category.likes)
+
+
+def get_category_list(max_results=0, starts_with=''):
+    category_list = []
+
+    if starts_with:
+        category_list = Category.objects.filter(name__istartswith=starts_with)
+    if max_results > 0:
+        if len(category_list) > max_results:
+            category_list = category_list[:max_results]
+
+    return category_list
+
+
+class CategorySuggestionView(View):
+    def get(self, request):
+        if 'suggestion' in request.GET:
+            suggestion = request.GET['suggestion']
+        else:
+            suggestion = ''
+
+        category_list = get_category_list(max_results=8,
+                                          starts_with=suggestion)
+
+        if len(category_list) == 0:
+            category_list = Category.objects.order_by('-likes')
+
+        return render(request, 'rango/categories.html',
+                      {'categories': category_list})
+
+
+
+
+

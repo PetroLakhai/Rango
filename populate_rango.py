@@ -56,6 +56,11 @@ def populate():
         "Python": {"pages": python_pages, "views": 128, "likes": 64},
         "Django": {"pages": django_pages, "views": 128, "likes": 32},
         "Other Frameworks": {"pages": other_pages, "views": 128, "likes": 16},
+        "Pascal": {"pages": [], "views": 10, "likes": 5},
+        "Perl": {"pages": [], "views": 9, "likes": 4},
+        "Prolog": {"pages": [], "views": 8, "likes": 3},
+        "PostScript": {"pages": [], "views": 7, "likes": 2},
+        "Programing": {"pages": [], "views": 6, "likes": 1},
     }
 
     # If you want to add more categories or pages,
