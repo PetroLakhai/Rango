@@ -1,3 +1,5 @@
+import datetime
+
 from django.contrib.auth.models import User
 from django.db import models
 from django.db.models.signals import post_save
@@ -28,6 +30,7 @@ class Page(models.Model):
     url = models.URLField()
     views = models.IntegerField(default=0)
     slug = models.SlugField(unique=True)
+    last_visit = models.DateTimeField(default=datetime.datetime.now())
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.title)

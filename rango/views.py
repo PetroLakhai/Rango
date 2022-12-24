@@ -9,7 +9,7 @@ from django.utils.decorators import method_decorator
 from django.views import View
 from django.http import HttpResponse
 
-from rango.bing_search import run_query
+# from rango.bing_search import run_query
 from rango.forms import CategoryForm, PageForm, UserProfileForm
 from rango.models import Category, Page, UserProfile
 
@@ -262,26 +262,26 @@ def visitor_cookie_handler(request):
     request.session["visits"] = visits
 
 
-class SearchView(View):
-    def post(self, request):
-        result_list = []
-
-        if request.method == "POST":
-            query = request.POST["query"].strip()
-            if query:
-                # Run our Bing function to get the results list!
-                result_list = run_query(query)
-
-        pages = Page.objects.all()
-        search_results = []
-        for page in pages:
-            if query.lower() in page.title.lower():
-                search_results.append(page)
-        return render(
-            request,
-            "rango/category.html",
-            {"result_list": result_list, "search_results": search_results},
-        )
+# class SearchView(View):
+#     def post(self, request):
+#         result_list = []
+#
+#         if request.method == "POST":
+#             query = request.POST["query"].strip()
+#             if query:
+#                 # Run our Bing function to get the results list!
+#                 result_list = run_query(query)
+#
+#         pages = Page.objects.all()
+#         search_results = []
+#         for page in pages:
+#             if query.lower() in page.title.lower():
+#                 search_results.append(page)
+#         return render(
+#             request,
+#             "rango/category.html",
+#             {"result_list": result_list, "search_results": search_results},
+#         )
 
 
 # def search(request):
@@ -307,6 +307,8 @@ class GoToUrlView(View):
             page_id = request.GET.get("page_id")
             try:
                 page = Page.objects.filter(id=page_id).first()
+                page.last_visit = datetime.now()
+                page.save()
             except Page.DoesNotExist:
                 return redirect(reverse("rango:index"))
 

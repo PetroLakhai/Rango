@@ -19,7 +19,6 @@ urlpatterns = [
         name="add_page",
     ),
     path("restricted/", views.RestrictedView.as_view(), name="restricted"),
-    path("search/", views.SearchView.as_view(), name="search"),
     path("goto/", views.GoToUrlView.as_view(), name="goto"),
     path(
         "profile_registration/",
