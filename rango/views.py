@@ -147,6 +147,7 @@ def visitor_cookie_handler(request):
 
 def search(request):
     result_list = []
+    query = ""
 
     if request.method == "POST":
         query = request.POST["query"].strip()
