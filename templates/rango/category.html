@@ -10,24 +10,66 @@
 {% endblock %}
 
 {% block body_block %}
+    <link rel="stylesheet" type="text/css" href="/static/css/stylesheet.css" />
     {% if category %}
-    <h1>{{ category.name }}</h1>
-    {% if pages %}
-    <ul>
-        {% for page in pages %}
-        <li><a href="{{ page.url }}">{{ page.title }}</a></li>
-        {% endfor %}
-    </ul>
-    {% else %}
-    <strong>No pages currently in category.</strong>
+        <h1>{{ category.name }}</h1>
+        {% if pages %}
+            <ul>
+                {% for page in pages %}
+                <li><a href="{% url 'rango:goto' %}?page_id={{page.id}}">{{ page.title }}</a>
+                    <a> Views: {{ page.views }}</a></li>
+                {% endfor %}
+            </ul>
+        {% if user.is_authenticated %}
+        <a href="{% url 'rango:add_page' category.slug %}">Add Page</a> <br /><ul></ul>
+        {% endif %}
+        {% endif %}
     {% endif %}
 
     {% if user.is_authenticated %}
-        <a href="{% url 'rango:add_page' category.slug %}">Add Page</a> <br />
+        <div>
+            <form class="form-inline" id="user-form" method="post" action="{% url 'rango:search' %}">
+                {% csrf_token %}
+                <div class="form-group">
+                    <input class="form-control" type="text" size="50" name="query" id="query"/>
+                </div>
+                <button class="btn btn-primary" type="submit" name="submit">Search</button>
+            </form>
+        </div>
     {% endif %}
 
-    {% else %}
-        The specified category does not exist.
-    {% endif %}
-<link rel="stylesheet" type="text/css" href="/static/css/stylesheet.css" />
+
+    <div>
+        {%if search_results %}
+            <br>
+            <h2>Sources Present on the Website</h2>
+            {% for search_result in search_results %}
+                <li><a href="{% url 'rango:goto' %}?page_id={{search_result.id}}">{{ search_result.title }}</a>
+                    <a> Views: {{ search_result.views }}</a></li>
+            {% endfor %}
+            <br>
+        {% endif %}
+    </div>
+
+
+    <div>
+        {% if result_list %}
+            <h2>Results from Bing Search</h2>
+        <div class="list-group">
+            {% for result in result_list %}
+                <div class="list-group-item">
+                    <h3 class="list-group-item-heading">
+                        <a href="{{ result.link }}">
+                            {{ result.title|safe|escape }}
+                        </a>
+                    </h3>
+                            <p class="list-group-item-text">
+                                {{ result.summary|safe|escape }}
+                            </p>
+                </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+    </div>
+
 {% endblock %}

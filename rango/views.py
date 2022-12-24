@@ -6,8 +6,8 @@ from django.shortcuts import redirect, render
 from django.urls import reverse
 
 from rango.bing_search import run_query
-from rango.forms import CategoryForm, PageForm
-from rango.models import Category, Page
+from rango.forms import CategoryForm, PageForm, UserProfileForm
+from rango.models import Category, Page, User, UserProfile
 
 
 def index(request):
@@ -50,7 +50,7 @@ def show_category(request, category_name_slug):
 
     try:
         category: Category = Category.objects.get(slug=category_name_slug)
-        pages: Page = Page.objects.filter(category=category)
+        pages: Page = Page.objects.filter(category=category).order_by("-views")
 
         context_dict["pages"] = pages
         context_dict["category"] = category
@@ -58,7 +58,7 @@ def show_category(request, category_name_slug):
     except Category.DoesNotExist:
         context_dict["category"] = None
         context_dict["pages"] = None
-
+    # import ipdb; ipdb.set_trace()
     return render(request, "rango/category.html", context=context_dict)
 
 
@@ -155,8 +155,42 @@ def search(request):
             # Run our Bing function to get the results list!
             result_list = run_query(query)
 
-    return render(
-        request,
-        "rango/search.html",
-        context={"result_list": result_list, "query": query},
-    )
+    pages = Page.objects.all()
+    search_results = []
+    for page in pages:
+        if query.lower() in page.title.lower():
+            search_results.append(page)
+    # import ipdb; ipdb.set_trace()
+    return render(request, "rango/category.html", {"result_list": result_list, "search_results": search_results})
+
+
+def goto_url(request):
+    page_id = None
+    if request.method == "GET":
+        page_id = request.GET.get("page_id")
+        page = Page.objects.filter(id=page_id).first()
+        page.views = page.views + 1
+        page.save()
+        page_url = page.url
+
+        return redirect(page_url)
+
+    return redirect(reverse("index"))
+
+
+def profile_registration(request):
+    profile_information = UserProfileForm()
+
+    if request.method == "POST":
+        profile_information = UserProfileForm(request.POST, request.FILES)
+        if profile_information.is_valid():
+            profile_information.save(commit=False)
+            # import ipdb; ipdb.set_trace()
+            user_profile = UserProfile.objects.get(user__id=request.user.id)
+            user_profile.website = profile_information.cleaned_data["website"]
+            user_profile.picture = profile_information.cleaned_data["picture"]
+            user_profile.save()
+            return redirect("/rango/")
+        else:
+            print(profile_information.errors)
+    return render(request, "rango/profile_registration.html", {"profile_information": profile_information})

@@ -16,4 +16,6 @@ urlpatterns = [
     ),
     path("restricted/", views.restricted, name="restricted"),
     path("search/", views.search, name="search"),
+    path("goto/", views.goto_url, name="goto"),
+    path("profile_registration/", views.profile_registration, name="profile_registration")
 ]
