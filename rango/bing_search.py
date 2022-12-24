@@ -27,7 +27,6 @@ def read_bing_key():
 
     if not bing_api_key:
         raise KeyError("Bing key not found")
-    print(bing_api_key)
     return bing_api_key
 
 
