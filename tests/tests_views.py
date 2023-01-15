@@ -7,7 +7,6 @@ from rango.models import Category
 def test_index_view_with_no_categories(client) -> None:
 
     response = client.get(reverse('rango:index'))
-    # import ipdb; ipdb.set_trace()
     assert response.status_code == 200
     assert 'There are no categories present.' in str(response.content)
 
