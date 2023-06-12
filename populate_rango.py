@@ -5,6 +5,7 @@ os.environ.setdefault("DJANGO_SETTINGS_MODULE", "tango_with_django_project.setti
 import django
 
 django.setup()
+
 from rango.models import Category, Page
 
 
@@ -47,12 +48,25 @@ def populate():
         },
     ]
 
+    go_pages = [
+        {
+            "title": "Official Go Documentation",
+            "url": "https://go.dev/doc/",
+            "views": 3,
+        },
+        {
+            "title": "Go Wikipedia",
+            "url": "https://shorturl.at/ayzKX",
+            "views": 5,
+        },
+    ]
+
     other_pages = [
         {"title": "Bottle", "url": "http://bottlepy.org/docs/dev/", "views": 7},
         {"title": "Flask", "url": "http://flask.pocoo.org", "views": 8},
     ]
 
-    cats = {
+    categories = {
         "Python": {"pages": python_pages, "views": 128, "likes": 64},
         "Django": {"pages": django_pages, "views": 128, "likes": 32},
         "Other Frameworks": {"pages": other_pages, "views": 128, "likes": 16},
@@ -61,6 +75,7 @@ def populate():
         "Prolog": {"pages": [], "views": 8, "likes": 3},
         "PostScript": {"pages": [], "views": 7, "likes": 2},
         "Programing": {"pages": [], "views": 6, "likes": 1},
+        "Go": {"pages": go_pages, "views": 3, "likes": 2},
     }
 
     # If you want to add more categories or pages,
@@ -68,31 +83,31 @@ def populate():
 
     # The code below goes through the cats dictionary, then adds each category,
     # and then adds all the associated pages for that category.
-    for cat, cat_data in cats.items():
-        c = add_cat(cat, views=cat_data["views"], likes=cat_data["likes"])
-        for p in cat_data["pages"]:
-            add_page(c, p["title"], p["url"], p["views"])
+    for cat_key, cat_data in categories.items():
+        category = add_cat(cat_key, views=cat_data["views"], likes=cat_data["likes"])
+        for page in cat_data["pages"]:
+            add_page(category, page["title"], page["url"], page["views"])
 
     # Print out the categories we have added.
-    for c in Category.objects.all():
-        for p in Page.objects.filter(category=c):
-            print(f"- {c}: {p}")
+    for category in Category.objects.all():
+        for page in Page.objects.filter(category=category):
+            print(f"- {category}: {page}")
 
 
 def add_page(cat, title, url, views):
-    p = Page.objects.get_or_create(category=cat, title=title)[0]
-    p.url = url
-    p.views = views
-    p.save()
-    return p
+    page = Page.objects.get_or_create(category=cat, title=title)[0]
+    page.url = url
+    page.views = views
+    page.save()
+    return page
 
 
 def add_cat(name, views, likes):
-    c = Category.objects.get_or_create(name=name)[0]
-    c.views = views
-    c.likes = likes
-    c.save()
-    return c
+    category = Category.objects.get_or_create(name=name)[0]
+    category.views = views
+    category.likes = likes
+    category.save()
+    return category
 
 
 # Start execution here!

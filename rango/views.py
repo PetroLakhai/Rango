@@ -3,11 +3,11 @@ from datetime import datetime
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.db.models.query import QuerySet
+from django.http import HttpResponse
 from django.shortcuts import redirect, render
 from django.urls import reverse
 from django.utils.decorators import method_decorator
 from django.views import View
-from django.http import HttpResponse
 
 # from rango.bing_search import run_query
 from rango.forms import CategoryForm, PageForm, UserProfileForm
@@ -448,7 +448,7 @@ class ListProfilesView(View):
 class LikeCategoryView(View):
     @method_decorator(login_required)
     def get(self, request):
-        category_id = request.GET['category_id']
+        category_id = request.GET["category_id"]
 
         try:
             category = Category.objects.get(id=int(category_id))
@@ -462,7 +462,7 @@ class LikeCategoryView(View):
         return HttpResponse(category.likes)
 
 
-def get_category_list(max_results=0, starts_with=''):
+def get_category_list(max_results=0, starts_with=""):
     category_list = []
 
     if starts_with:
@@ -476,21 +476,14 @@ def get_category_list(max_results=0, starts_with=''):
 
 class CategorySuggestionView(View):
     def get(self, request):
-        if 'suggestion' in request.GET:
-            suggestion = request.GET['suggestion']
+        if "suggestion" in request.GET:
+            suggestion = request.GET["suggestion"]
         else:
-            suggestion = ''
+            suggestion = ""
 
-        category_list = get_category_list(max_results=8,
-                                          starts_with=suggestion)
+        category_list = get_category_list(max_results=8, starts_with=suggestion)
 
         if len(category_list) == 0:
-            category_list = Category.objects.order_by('-likes')
+            category_list = Category.objects.order_by("-likes")
 
-        return render(request, 'rango/categories.html',
-                      {'categories': category_list})
-
-
-
-
-
+        return render(request, "rango/categories.html", {"categories": category_list})
